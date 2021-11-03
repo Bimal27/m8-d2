@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/Bimal27/m6-d7#readme",
   "dependencies": {
+    "atob": "^2.1.2",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-list-endpoints": "^6.0.0",
     "http-errors": "^1.8.0",
