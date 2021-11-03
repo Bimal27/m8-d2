@@ -32,33 +32,33 @@ const blogpostSchema = new Schema(
   },
 )
 
-// blogpostSchema.pre('save', async function (next) {
-//   const newAuthor = this
-//   const plainPW = newAuthor.password
+blogpostSchema.pre('save', async function (next) {
+  const newAuthor = this.author
+  const plainPW = newAuthor.password
 
-//   if (newAuthor.isModified('password')) {
-//     newAuthor.password = await bcrypt.hash(plainPW, 10)
-//   }
-//   next()
-// })
+  if (newAuthor.isModified('password')) {
+    newAuthor.password = await bcrypt.hash(plainPW, 10)
+  }
+  next()
+})
 
-// blogpostSchema.methods.toJSON = function () {
-//   const authorDocument = this
-//   const authorObject = authorDocument.toObject()
-//   delete authorObject.password
-//   delete authorObject.__v
+blogpostSchema.methods.toJSON = function () {
+  const authorDocument = this
+  const authorObject = authorDocument.toObject()
+  delete authorObject.password
+  delete authorObject.__v
 
-//   return authorObject
-// }
+  return authorObject
+}
 
-// blogpostSchema.statics.checkCredentials = async function (email, plainPW) {
-//   const authors = await this.findOne({ email })
+blogpostSchema.statics.checkCredentials = async function (email, plainPW) {
+  const authors = await this.findOne({ email })
 
-//   if (authors) {
-//     const isMatch = await bcrypt.compare(plainPW, authors.password)
+  if (authors) {
+    const isMatch = await bcrypt.compare(plainPW, authors.password)
 
-//     if (isMatch) return authors
-//     else return null
-//   } else return null
-// }
+    if (isMatch) return authors
+    else return null
+  } else return null
+}
 export default model('strive-blog-posts', blogpostSchema)
